@@ -95,7 +95,6 @@ import { useRoute } from 'vue-router';
 import { useMenuStore } from '../stores/menuStore';
 import { ProductCard } from '../components/menu';
 import { useHead } from '@vueuse/head';
-import { computed } from 'vue';
 
 const props = defineProps(['categoryId']);
 const menuStore = useMenuStore();
