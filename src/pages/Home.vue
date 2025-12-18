@@ -100,7 +100,6 @@
 			<div class="section-header">
 				<h2 class="section-title">למה מרגליתות?</h2>
 			</div>
-
 			<div class="features-grid">
 				<div class="feature-card">
 					<span class="feature-icon">🌿</span>
@@ -111,6 +110,11 @@
 					<span class="feature-icon">👩‍🍳</span>
 					<h3 class="feature-title">עבודת יד</h3>
 					<p class="feature-text">כל מוצר מוכן בעבודת יד עם אהבה ותשומת לב לפרטים</p>
+				</div>
+				<div class="feature-card">
+					<span class="feature-icon">✨</span>
+					<h3 class="feature-title">ניקיון ברמה גבוהה</h3>
+					<p class="feature-text">המטבח שלנו נשמר תמיד נקי ומסודר ברמה הגבוהה ביותר</p>
 				</div>
 				<div class="feature-card">
 					<span class="feature-icon">🎂</span>
@@ -152,6 +156,18 @@ import { computed } from 'vue';
 import { useMenuStore } from '../stores/menuStore';
 import { ProductCard } from '../components/menu';
 import logo from '../assets/logo.png';
+import { useHead } from '@vueuse/head';
+
+useHead({
+	title: 'תפריט | מרגליתות - מאפייה ביתית בבית שמש',
+	meta: [
+		{
+			name: 'description',
+			content:
+				'תפריט מרגליתות - עוגות שמרים, עוגות בחושות, עוגיות, לחמים, מאפים ללא גלוטן, טבעוניים ועוד. משלוחים לבית שמש.',
+		},
+	],
+});
 
 const menuStore = useMenuStore();
 
@@ -557,8 +573,20 @@ const popularProducts = computed(() => menuStore.popularProducts.slice(0, 8));
 
 .features-grid {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+	grid-template-columns: repeat(5, 1fr);
 	gap: 1.5rem;
+}
+
+@media (max-width: 1024px) {
+	.features-grid {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+@media (max-width: 600px) {
+	.features-grid {
+		grid-template-columns: 1fr;
+	}
 }
 
 .feature-card {

@@ -19,6 +19,7 @@
 
 				<!-- Right Side Actions -->
 				<div class="nav-actions">
+					<SearchBar />
 					<DarkModeToggle class="dark-toggle-desktop" />
 					<CartButton />
 
@@ -58,6 +59,7 @@ import { useDarkMode } from './composables/useDarkMode';
 import NotificationToast from './components/ui/NotificationToast.vue';
 import DarkModeToggle from './components/ui/DarkModeToggle.vue';
 import AppFooter from './components/layout/AppFooter.vue';
+import SearchBar from './components/ui/SearchBar.vue';
 import { CartDrawer, CartButton } from './components/cart';
 import logo from './assets/logo.png';
 

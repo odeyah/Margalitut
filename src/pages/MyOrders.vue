@@ -129,7 +129,18 @@ import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useOrderStore } from '../stores/orderStore';
 import { getOrdersByPhone } from '../services/ordersService';
+import { useHead } from '@vueuse/head';
 
+useHead({
+	title: 'תפריט | מרגליתות - מאפייה ביתית בבית שמש',
+	meta: [
+		{
+			name: 'description',
+			content:
+				'תפריט מרגליתות - עוגות שמרים, עוגות בחושות, עוגיות, לחמים, מאפים ללא גלוטן, טבעוניים ועוד. משלוחים לבית שמש.',
+		},
+	],
+});
 const router = useRouter();
 const orderStore = useOrderStore();
 

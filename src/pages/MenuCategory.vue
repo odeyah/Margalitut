@@ -94,19 +94,28 @@ import { ref, computed, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useMenuStore } from '../stores/menuStore';
 import { ProductCard } from '../components/menu';
+import { useHead } from '@vueuse/head';
+import { computed } from 'vue';
 
-const route = useRoute();
+const props = defineProps(['categoryId']);
 const menuStore = useMenuStore();
+const category = computed(() => menuStore.getCategoryById(props.categoryId));
+
+useHead({
+	title: computed(() => `${category.value?.name || 'קטגוריה'} | מרגליתות - מאפייה ביתית`),
+	meta: [
+		{
+			name: 'description',
+			content: computed(() => `${category.value?.description || ''} - מרגליתות מאפייה ביתית בבית שמש. משלוחים לכל האזור.`),
+		},
+	],
+});
+const route = useRoute();
 
 // State
 const activeSubcategory = ref('all');
 const showPopularOnly = ref(false);
 const sortBy = ref('default');
-
-// Get category from route
-const category = computed(() => {
-	return menuStore.getCategoryById(route.params.categoryId);
-});
 
 // Get subcategories (for dairy meals)
 const subcategories = computed(() => {

@@ -16,7 +16,18 @@ import { onMounted } from 'vue';
 import { useOrderStore } from '../stores/orderStore';
 import MultiStepForm from '../components/form/MultiStepForm.vue';
 import NotificationToast from '../components/ui/NotificationToast.vue';
+import { useHead } from '@vueuse/head';
 
+useHead({
+	title: 'תפריט | מרגליתות - מאפייה ביתית בבית שמש',
+	meta: [
+		{
+			name: 'description',
+			content:
+				'תפריט מרגליתות - עוגות שמרים, עוגות בחושות, עוגיות, לחמים, מאפים ללא גלוטן, טבעוניים ועוד. משלוחים לבית שמש.',
+		},
+	],
+});
 const orderStore = useOrderStore();
 
 // Reset form when entering the page

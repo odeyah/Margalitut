@@ -544,11 +544,6 @@ export const useMenuStore = defineStore('menu', () => {
 
 	// ===== GETTERS =====
 
-	// Get category by ID
-	const getCategoryById = computed(() => {
-		return categoryId => categories.value.find(c => c.id === categoryId);
-	});
-
 	// Get products by category
 	const getProductsByCategory = computed(() => {
 		return categoryId => products.value.filter(p => p.category === categoryId);
@@ -582,27 +577,64 @@ export const useMenuStore = defineStore('menu', () => {
 		}));
 	});
 
-	// Search products
-	const searchProducts = computed(() => {
-		return query => {
-			if (!query) return [];
-			const lowerQuery = query.toLowerCase();
-			return products.value.filter(p => p.name.includes(query) || p.description.includes(query));
-		};
-	});
+	// חיפוש מוצרים
+	function searchProducts(query) {
+		if (!query || query.trim() === '') return [];
+
+		const searchTerm = query.trim().toLowerCase();
+
+		return products.value
+			.filter(product => {
+				// דלג על מוצרים מחוגי אפייה
+				if (product.category === 'baking-workshops') return false;
+
+				// חפש בשם המוצר או בתיאור
+				return (
+					product.name.toLowerCase().includes(searchTerm) ||
+					(product.description && product.description.toLowerCase().includes(searchTerm))
+				);
+			})
+			.map(product => {
+				const category = categories.value.find(c => c.id === product.category);
+				return {
+					...product,
+					categoryId: product.category,
+					categoryName: category?.name || '',
+				};
+			});
+	}
+
+	// קבלת קטגוריה לפי ID
+	function getCategoryById(categoryId) {
+		return categories.value.find(cat => cat.id === categoryId);
+	}
+
+	// קבלת מוצר לפי ID
+	function getProductById(productId) {
+		const product = products.value.find(p => p.id === productId);
+		if (product) {
+			return {
+				...product,
+				categoryId: product.category,
+			};
+		}
+		return null;
+	}
 
 	return {
 		// State
 		categories,
 		products,
 		dairySubcategories,
-		// Getters
-		getCategoryById,
+		// Getters (computed)
 		getProductsByCategory,
 		getProductsBySubcategory,
 		getPopularByCategory,
 		popularProducts,
 		getCategoryPreview,
+		// Functions
 		searchProducts,
+		getCategoryById,
+		getProductById,
 	};
 });
